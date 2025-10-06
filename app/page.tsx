@@ -34,9 +34,21 @@ export default function Home() {
         </div>
 
         <div className="relative z-10">
-          <Navigation />
+          {/* Simplified top header - just the logo */}
+          <nav className="sticky top-0 z-50 bg-amber-50/80 backdrop-blur-xl border-b border-amber-200/40 safe-top">
+            <div className="max-w-7xl mx-auto px-6 py-4">
+              <div className="flex justify-center items-center">
+                <div className="flex items-center gap-3">
+                  <span className="text-3xl">🌊</span>
+                  <h1 className="text-2xl font-extralight tracking-wider bg-gradient-to-r from-amber-800 via-orange-600 to-amber-700 bg-clip-text text-transparent">
+                    flow
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </nav>
 
-          <main className="flex flex-col h-[calc(100vh-140px)] relative">
+          <main className="flex flex-col h-[calc(100vh-100px)] relative">
             {/* Dynamic Content Based on View - fills space above input */}
             <div className="flex-1 w-full flex justify-center items-start pt-8 px-6 sm:px-8 overflow-auto pb-32">
               {currentView === 'stream' && <InboxView />}
@@ -44,11 +56,12 @@ export default function Home() {
               {currentView === 'focus' && <FocusMode />}
             </div>
 
-            {/* Capture Bar - Fixed at 1/3 from bottom (optimized for 412x915) */}
+            {/* Capture Bar + Navigation Bubbles - Fixed at 1/3 from bottom */}
             {currentView !== 'focus' && (
               <div className="absolute bottom-[33vh] left-0 right-0 w-full px-6 sm:px-8 py-4 bg-gradient-to-b from-transparent via-amber-50/95 to-amber-50">
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-3xl mx-auto space-y-4">
                   <CaptureBar />
+                  <Navigation />
                 </div>
               </div>
             )}

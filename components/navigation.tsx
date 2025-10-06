@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export function Navigation() {
   const { currentView, setCurrentView } = useFlowStore();
-  const [showMenu, setShowMenu] = useState(false);
+  const [showBubbles, setShowBubbles] = useState(false);
 
   const navItems = [
     { id: 'stream' as const, label: 'Stream', emoji: '🌊' },
@@ -17,65 +17,53 @@ export function Navigation() {
   const currentItem = navItems.find(item => item.id === currentView) || navItems[0];
 
   return (
-    <nav className="sticky top-0 z-50 bg-amber-50/80 backdrop-blur-xl border-b border-amber-200/40 safe-top">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col items-center py-6">
-          {/* Centered Title */}
-          <motion.div
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="flex items-center gap-3 mb-4"
-          >
-            <span className="text-4xl">🌊</span>
-            <h1 className="text-3xl font-extralight tracking-wider bg-gradient-to-r from-amber-800 via-orange-600 to-amber-700 bg-clip-text text-transparent">
-              flow
-            </h1>
-          </motion.div>
+    <div className="flex justify-center items-center relative">
+      {/* Main navigation bubble */}
+      <motion.button
+        onClick={() => setShowBubbles(!showBubbles)}
+        className="w-16 h-16 rounded-full bg-amber-100/80 backdrop-blur-sm border-2 border-amber-300/50
+                   flex items-center justify-center text-2xl shadow-lg hover:shadow-xl hover:scale-110
+                   active:scale-95 transition-all duration-300"
+        whileTap={{ scale: 0.9 }}
+      >
+        {currentItem.emoji}
+      </motion.button>
 
-          {/* Dropdown Menu */}
-          <div className="relative">
-            <button
-              onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-2 px-6 py-2 bg-amber-100/50 backdrop-blur-sm rounded-full
-                         border border-amber-200/50 hover:bg-amber-100/70 hover:shadow-md active:scale-95
-                         transition-all duration-300"
-            >
-              <span className="text-lg">{currentItem.emoji}</span>
-              <span className="text-sm font-light tracking-wide text-amber-800">{currentItem.label}</span>
-              <span className="text-xs text-amber-600">▼</span>
-            </button>
+      {/* Other navigation bubbles - appear around main bubble */}
+      <AnimatePresence>
+        {showBubbles && (
+          <>
+            {navItems
+              .filter(item => item.id !== currentView)
+              .map((item, index) => {
+                const angle = (index * 120) - 60; // Spread bubbles in an arc
+                const radius = 80;
+                const x = Math.cos((angle * Math.PI) / 180) * radius;
+                const y = Math.sin((angle * Math.PI) / 180) * radius;
 
-            <AnimatePresence>
-              {showMenu && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-full mt-3 left-1/2 -translate-x-1/2 bg-amber-50/95 backdrop-blur-xl
-                             rounded-2xl shadow-2xl border border-amber-200/50 overflow-hidden min-w-[160px]"
-                >
-                  {navItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        setCurrentView(item.id);
-                        setShowMenu(false);
-                      }}
-                      className={`w-full flex items-center gap-3 px-6 py-3.5 hover:bg-amber-100/40 transition-all ${
-                        currentView === item.id ? 'bg-gradient-to-r from-amber-100/60 to-orange-100/50' : ''
-                      }`}
-                    >
-                      <span className="text-lg">{item.emoji}</span>
-                      <span className="text-sm font-light tracking-wide text-amber-800">{item.label}</span>
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </div>
-    </nav>
+                return (
+                  <motion.button
+                    key={item.id}
+                    initial={{ scale: 0, x: 0, y: 0, opacity: 0 }}
+                    animate={{ scale: 1, x, y, opacity: 1 }}
+                    exit={{ scale: 0, x: 0, y: 0, opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    onClick={() => {
+                      setCurrentView(item.id);
+                      setShowBubbles(false);
+                    }}
+                    className="absolute w-14 h-14 rounded-full bg-amber-50/90 backdrop-blur-sm border-2 border-amber-200/50
+                               flex items-center justify-center text-xl shadow-lg hover:shadow-xl hover:scale-110
+                               active:scale-95 transition-all duration-200"
+                    style={{ left: '50%', top: '50%', marginLeft: '-28px', marginTop: '-28px' }}
+                  >
+                    {item.emoji}
+                  </motion.button>
+                );
+              })}
+          </>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
