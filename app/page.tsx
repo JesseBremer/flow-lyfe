@@ -56,7 +56,7 @@ export default function Home() {
 
           {/* Footer */}
           <footer className="py-6 text-center text-sm text-amber-700/60">
-            <p className="font-light tracking-wide">Flow • Breathe • Emerge</p>
+            <p className="font-light tracking-wide">flow • breathe • emerge</p>
           </footer>
         </div>
       </div>
