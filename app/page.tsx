@@ -36,17 +36,17 @@ export default function Home() {
         <div className="relative z-10">
           <Navigation />
 
-          <main className="flex flex-col min-h-[calc(100vh-140px)]">
-            {/* Dynamic Content Based on View - at top */}
-            <div className="flex-1 w-full flex justify-center items-start pt-8 px-6 sm:px-8 overflow-auto">
+          <main className="flex flex-col h-[calc(100vh-140px)] relative">
+            {/* Dynamic Content Based on View - fills space above input */}
+            <div className="flex-1 w-full flex justify-center items-start pt-8 px-6 sm:px-8 overflow-auto pb-32">
               {currentView === 'stream' && <InboxView />}
               {currentView === 'lists' && <ListsView />}
               {currentView === 'focus' && <FocusMode />}
             </div>
 
-            {/* Capture Bar - Fixed at bottom for thumb reach */}
+            {/* Capture Bar - Fixed at 1/3 from bottom (optimized for 412x915) */}
             {currentView !== 'focus' && (
-              <div className="sticky bottom-0 w-full px-6 sm:px-8 pb-8 pt-4 bg-gradient-to-t from-amber-50 via-amber-50/95 to-transparent">
+              <div className="absolute bottom-[33vh] left-0 right-0 w-full px-6 sm:px-8 py-4 bg-gradient-to-b from-transparent via-amber-50/95 to-amber-50">
                 <div className="max-w-3xl mx-auto">
                   <CaptureBar />
                 </div>
