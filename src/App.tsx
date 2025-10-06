@@ -51,15 +51,19 @@ export default function App() {
             {currentView === 'focus' && <FocusMode />}
           </div>
 
-          {/* Capture Bar + Navigation Bubbles - Fixed at 1/3 from bottom */}
+          {/* Capture Bar - Fixed at 1/3 from bottom */}
           {currentView !== 'focus' && (
             <div className="absolute bottom-[33vh] left-0 right-0 w-full px-6 sm:px-8 py-4 bg-gradient-to-b from-transparent via-amber-50/95 to-amber-50">
-              <div className="max-w-3xl mx-auto space-y-4">
+              <div className="max-w-3xl mx-auto">
                 <CaptureBar />
-                <Navigation />
               </div>
             </div>
           )}
+
+          {/* Navigation Bubble - Between bottom and input, right aligned */}
+          <div className="absolute bottom-[25vh] right-6 sm:right-8">
+            <Navigation />
+          </div>
         </main>
 
         {/* Footer */}

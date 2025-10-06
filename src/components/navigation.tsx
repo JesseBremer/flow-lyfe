@@ -38,7 +38,7 @@ export function Navigation() {
               .map((item, index) => {
                 const angle = (index * 120) - 60; // Spread bubbles in an arc
                 const radius = 80;
-                const x = Math.cos((angle * Math.PI) / 180) * radius;
+                const x = -Math.cos((angle * Math.PI) / 180) * radius; // Negative to appear on left
                 const y = Math.sin((angle * Math.PI) / 180) * radius;
 
                 return (
