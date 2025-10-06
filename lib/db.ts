@@ -10,8 +10,8 @@ export class FlowLyfeDB extends Dexie {
   constructor() {
     super('FlowLyfeDB');
 
-    this.version(1).stores({
-      items: 'id, status, createdAt, dueDate, clusterId, isAnchor',
+    this.version(2).stores({
+      items: 'id, status, category, createdAt, dueDate, clusterId, isAnchor',
       clusters: 'id, createdAt',
       focusSessions: 'id, startedAt, itemId',
       reflections: 'id, date'

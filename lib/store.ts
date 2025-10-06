@@ -3,7 +3,7 @@ import { FlowItem, FocusSession } from './types';
 
 interface FlowState {
   // Current view
-  currentView: 'stream' | 'current' | 'flow-board' | 'focus' | 'tide';
+  currentView: 'stream' | 'lists' | 'focus';
   setCurrentView: (view: FlowState['currentView']) => void;
 
   // Active focus session

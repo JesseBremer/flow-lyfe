@@ -15,6 +15,20 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Flow-Lyfe • Stop planning. Start flowing.",
   description: "A zero-friction productivity app where you capture ideas instantly and organize later. Flow with your natural rhythm.",
+  manifest: "/manifest.json",
+  themeColor: "#3b82f6",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+    viewportFit: "cover"
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Flow-Lyfe"
+  }
 };
 
 export default function RootLayout({
