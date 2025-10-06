@@ -14,29 +14,34 @@ export function InboxView() {
     () => db.items.where('status').equals('inbox').reverse().sortBy('createdAt')
   );
 
-  if (!inboxItems) return <div className="text-center py-12">Loading stream...</div>;
+  if (!inboxItems) return <div className="text-center py-8">Loading stream...</div>;
+
+  // Show only last 5 items for quick visual confirmation
+  const recentItems = inboxItems.slice(0, 5);
 
   return (
-    <div className="max-w-3xl mx-auto">
-      {/* Simple count if items exist */}
-      {inboxItems.length > 0 && (
-        <div className="mb-6 text-center text-sm text-neutral-500">
-          {inboxItems.length} item{inboxItems.length === 1 ? '' : 's'} in your stream
-        </div>
-      )}
-
-      {/* Stream Items */}
-      {inboxItems.length === 0 ? (
-        <div className="text-center py-16 text-neutral-500">
-          <p className="text-lg">Your stream is flowing clear</p>
-          <p className="text-sm mt-2">Capture thoughts above to see them here</p>
+    <div className="max-w-3xl mx-auto pb-8">
+      {/* Recent Entries - Immediate feedback */}
+      {recentItems.length === 0 ? (
+        <div className="text-center py-12 text-neutral-400">
+          <p className="text-base">Start capturing...</p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {inboxItems.map((item, index) => (
-            <StreamItem key={item.id} item={item} index={index} />
-          ))}
-        </div>
+        <>
+          <div className="mb-3 text-center text-xs text-neutral-400">
+            Recent ({inboxItems.length} total)
+          </div>
+          <div className="space-y-2">
+            {recentItems.map((item, index) => (
+              <StreamItem key={item.id} item={item} index={index} />
+            ))}
+          </div>
+          {inboxItems.length > 5 && (
+            <div className="mt-4 text-center text-xs text-neutral-400">
+              + {inboxItems.length - 5} more items
+            </div>
+          )}
+        </>
       )}
     </div>
   );

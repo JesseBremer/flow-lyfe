@@ -7,7 +7,7 @@ import { CaptureBar } from '@/components/capture-bar';
 import { InboxView } from '@/components/inbox-view';
 import { ListsView } from '@/components/lists-view';
 import { FocusMode } from '@/components/focus-mode';
-import { RegisterSW } from './register-sw';
+import { RegisterSW } from '@/app/register-sw';
 
 export default function Home() {
   const { currentView, setCurrentView } = useFlowStore();
@@ -25,10 +25,10 @@ export default function Home() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <Navigation />
 
-      <main className="container mx-auto px-4 py-8">
-        {/* Capture Bar - Always visible except in Focus mode */}
+      <main className="container mx-auto px-4">
+        {/* Capture Bar - Always at top except in Focus mode */}
         {currentView !== 'focus' && (
-          <div className="mb-12">
+          <div className="py-4 sm:py-6">
             <CaptureBar />
           </div>
         )}

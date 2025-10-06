@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { useFlowStore } from '@/lib/store';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function Navigation() {
   const { currentView, setCurrentView } = useFlowStore();
+  const [showMenu, setShowMenu] = useState(false);
 
   const navItems = [
     { id: 'stream' as const, label: 'Stream', emoji: '🌊' },
@@ -12,41 +14,57 @@ export function Navigation() {
     { id: 'focus' as const, label: 'Focus', emoji: '🎧' }
   ];
 
+  const currentItem = navItems.find(item => item.id === currentView) || navItems[0];
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200 safe-top">
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
-        <div className="flex items-center justify-between h-14 sm:h-16">
-          <div className="flex items-center gap-2">
-            <span className="text-xl sm:text-2xl">🌊</span>
-            <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <div className="flex flex-col items-center h-auto py-3 sm:py-4">
+          {/* Centered Title */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl sm:text-3xl">🌊</span>
+            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Flow-Lyfe
             </h1>
           </div>
 
-          <div className="flex gap-1 bg-neutral-100 rounded-full p-1">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setCurrentView(item.id)}
-                className={`relative px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors ${
-                  currentView === item.id
-                    ? 'text-white'
-                    : 'text-neutral-600 active:text-neutral-900'
-                }`}
-              >
-                {currentView === item.id && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-1">
-                  <span>{item.emoji}</span>
-                  <span className="hidden xs:inline">{item.label}</span>
-                </span>
-              </button>
-            ))}
+          {/* Dropdown Menu */}
+          <div className="relative">
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-full hover:bg-neutral-200 active:bg-neutral-300 transition-colors"
+            >
+              <span>{currentItem.emoji}</span>
+              <span className="text-sm font-medium">{currentItem.label}</span>
+              <span className="text-xs">▼</span>
+            </button>
+
+            <AnimatePresence>
+              {showMenu && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden min-w-[150px]"
+                >
+                  {navItems.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        setCurrentView(item.id);
+                        setShowMenu(false);
+                      }}
+                      className={`w-full flex items-center gap-2 px-4 py-3 hover:bg-neutral-50 transition-colors ${
+                        currentView === item.id ? 'bg-blue-50' : ''
+                      }`}
+                    >
+                      <span>{item.emoji}</span>
+                      <span className="text-sm font-medium">{item.label}</span>
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
