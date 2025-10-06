@@ -20,7 +20,7 @@ export function InboxView() {
   const recentItems = inboxItems.slice(0, 5);
 
   return (
-    <div className="max-w-3xl mx-auto pb-8">
+    <div className="w-full max-w-2xl mx-auto pb-8">
       {/* Recent Entries - Immediate feedback */}
       {recentItems.length === 0 ? (
         <div className="text-center py-12 text-neutral-400">

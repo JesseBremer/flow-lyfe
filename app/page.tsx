@@ -25,16 +25,16 @@ export default function Home() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <Navigation />
 
-      <main className="container mx-auto px-4">
+      <main className="flex flex-col items-center justify-start min-h-[calc(100vh-200px)] px-4">
         {/* Capture Bar - Always at top except in Focus mode */}
         {currentView !== 'focus' && (
-          <div className="py-4 sm:py-6">
+          <div className="py-4 sm:py-6 w-full max-w-2xl">
             <CaptureBar />
           </div>
         )}
 
         {/* Dynamic Content Based on View */}
-        <div className="animate-in fade-in duration-300">
+        <div className="animate-in fade-in duration-300 w-full flex justify-center">
           {currentView === 'stream' && <InboxView />}
           {currentView === 'lists' && <ListsView />}
           {currentView === 'focus' && <FocusMode />}
