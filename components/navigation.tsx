@@ -17,35 +17,43 @@ export function Navigation() {
   const currentItem = navItems.find(item => item.id === currentView) || navItems[0];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200 safe-top">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6">
-        <div className="flex flex-col items-center h-auto py-3 sm:py-4">
+    <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl border-b border-slate-200/30 safe-top">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col items-center py-6">
           {/* Centered Title */}
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-3xl sm:text-4xl">🌊</span>
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Flow-Lyfe
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="flex items-center gap-3 mb-4"
+          >
+            <span className="text-4xl">🌊</span>
+            <h1 className="text-3xl font-extralight tracking-wider bg-gradient-to-r from-slate-600 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+              flow
             </h1>
-          </div>
+          </motion.div>
 
           {/* Dropdown Menu */}
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-neutral-100 rounded-full hover:bg-neutral-200 active:bg-neutral-300 transition-colors"
+              className="flex items-center gap-2 px-6 py-2 bg-white/50 backdrop-blur-sm rounded-full
+                         border border-slate-200/50 hover:bg-white/70 hover:shadow-md active:scale-95
+                         transition-all duration-300"
             >
               <span className="text-lg">{currentItem.emoji}</span>
-              <span className="text-base font-medium">{currentItem.label}</span>
-              <span className="text-sm">▼</span>
+              <span className="text-sm font-light tracking-wide text-slate-600">{currentItem.label}</span>
+              <span className="text-xs text-slate-400">▼</span>
             </button>
 
             <AnimatePresence>
               {showMenu && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden min-w-[150px]"
+                  initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full mt-3 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xl
+                             rounded-2xl shadow-2xl border border-slate-200/50 overflow-hidden min-w-[160px]"
                 >
                   {navItems.map((item) => (
                     <button
@@ -54,12 +62,12 @@ export function Navigation() {
                         setCurrentView(item.id);
                         setShowMenu(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-5 py-3.5 hover:bg-neutral-50 transition-colors ${
-                        currentView === item.id ? 'bg-blue-50' : ''
+                      className={`w-full flex items-center gap-3 px-6 py-3.5 hover:bg-slate-50/50 transition-all ${
+                        currentView === item.id ? 'bg-gradient-to-r from-blue-50/50 to-purple-50/50' : ''
                       }`}
                     >
                       <span className="text-lg">{item.emoji}</span>
-                      <span className="text-base font-medium">{item.label}</span>
+                      <span className="text-sm font-light tracking-wide text-slate-600">{item.label}</span>
                     </button>
                   ))}
                 </motion.div>

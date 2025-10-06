@@ -20,25 +20,25 @@ export function InboxView() {
   const recentItems = inboxItems.slice(0, 5);
 
   return (
-    <div className="w-full max-w-4xl mx-auto pb-8">
+    <div className="w-full max-w-3xl mx-auto pb-12">
       {/* Recent Entries - Immediate feedback */}
       {recentItems.length === 0 ? (
-        <div className="text-center py-12 text-neutral-400">
-          <p className="text-xl sm:text-2xl">Start capturing...</p>
+        <div className="text-center py-16">
+          <p className="text-xl font-light tracking-wide text-slate-300">breathe in...</p>
         </div>
       ) : (
         <>
-          <div className="mb-4 text-center text-sm sm:text-base text-neutral-400">
-            Recent ({inboxItems.length} total)
+          <div className="mb-6 text-center text-sm font-light tracking-widest text-slate-400 uppercase">
+            Recent ({inboxItems.length})
           </div>
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-4">
             {recentItems.map((item, index) => (
               <StreamItem key={item.id} item={item} index={index} />
             ))}
           </div>
           {inboxItems.length > 5 && (
-            <div className="mt-6 text-center text-sm sm:text-base text-neutral-400">
-              + {inboxItems.length - 5} more items
+            <div className="mt-8 text-center text-sm font-light tracking-wide text-slate-400">
+              + {inboxItems.length - 5} more flowing...
             </div>
           )}
         </>
@@ -52,9 +52,9 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
   const energyColors = {
-    high: 'border-l-yellow-400',
-    medium: 'border-l-blue-400',
-    low: 'border-l-purple-400'
+    high: 'border-l-amber-300/60',
+    medium: 'border-l-sky-300/60',
+    low: 'border-l-violet-300/60'
   };
 
   const handleQuickAction = async (action: 'today' | 'someday' | 'done') => {
@@ -113,30 +113,31 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
 
   return (
     <motion.div
-      initial={{ x: -20, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ delay: index * 0.05 }}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: index * 0.08, type: "spring", stiffness: 100 }}
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
       onClick={() => setShowActions(!showActions)}
-      className={`p-4 sm:p-6 bg-white rounded-xl border-l-4 ${energyColors[item.energy || 'medium']}
-                  shadow-sm active:shadow-md sm:hover:shadow-md transition-all group relative touch-manipulation`}
+      className={`p-6 bg-white/70 backdrop-blur-sm rounded-2xl border-l-[6px] ${energyColors[item.energy || 'medium']}
+                  shadow-lg hover:shadow-xl active:shadow-xl transition-all duration-300 group relative touch-manipulation
+                  hover:bg-white/90`}
     >
-      <p className="text-neutral-800 text-lg sm:text-xl">{item.content}</p>
+      <p className="text-slate-700 text-lg font-light leading-relaxed">{item.content}</p>
 
       {/* Smart hint badge */}
       {smartHint && item.category === 'uncategorized' && (
-        <span className="absolute top-2 right-2 text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+        <span className="absolute top-3 right-3 text-xs px-3 py-1 bg-blue-100/80 text-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity font-light">
           {smartHint}
         </span>
       )}
 
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-3 text-sm sm:text-base text-neutral-500">
-          <span>{format(item.createdAt, 'h:mm a')}</span>
-          {item.clusterId && <span className="text-lg">🌊</span>}
+      <div className="flex items-center justify-between mt-5">
+        <div className="flex items-center gap-3 text-sm text-slate-400">
+          <span className="font-light">{format(item.createdAt, 'h:mm a')}</span>
+          {item.clusterId && <span className="text-base">🌊</span>}
           {item.category !== 'uncategorized' && (
-            <span className="px-3 py-1 bg-neutral-100 rounded-full text-sm">
+            <span className="px-3 py-1 bg-slate-100/50 rounded-full text-xs font-light tracking-wide">
               {item.category === 'thought' && '💭'}
               {item.category === 'idea' && '💡'}
               {item.category === 'todo' && '✓'}
@@ -152,28 +153,31 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
         <AnimatePresence>
           {showActions && (
             <motion.div
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              className="flex gap-1 flex-wrap sm:flex-nowrap"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="flex gap-2 flex-wrap sm:flex-nowrap"
             >
               <button
                 onClick={() => handleQuickAction('today')}
-                className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-100 text-blue-700 rounded-lg active:bg-blue-200 sm:hover:bg-blue-200 transition-colors touch-manipulation"
+                className="px-3 py-1.5 text-xs font-light tracking-wide bg-blue-100/60 text-blue-600 rounded-full
+                           hover:bg-blue-100 active:bg-blue-200 transition-all touch-manipulation"
                 title="Add to Today"
               >
-                Today
+                today
               </button>
               <button
                 onClick={() => handleQuickAction('someday')}
-                className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-purple-100 text-purple-700 rounded-lg active:bg-purple-200 sm:hover:bg-purple-200 transition-colors touch-manipulation"
+                className="px-3 py-1.5 text-xs font-light tracking-wide bg-purple-100/60 text-purple-600 rounded-full
+                           hover:bg-purple-100 active:bg-purple-200 transition-all touch-manipulation"
                 title="Add to Someday"
               >
-                Later
+                later
               </button>
               <button
                 onClick={() => setShowCategoryPicker(!showCategoryPicker)}
-                className="px-3 py-2 text-base sm:text-lg bg-neutral-100 text-neutral-700 rounded-lg active:bg-neutral-200 sm:hover:bg-neutral-200 transition-colors touch-manipulation"
+                className="px-2.5 py-1.5 text-sm bg-slate-100/60 rounded-full
+                           hover:bg-slate-100 active:bg-slate-200 transition-all touch-manipulation"
                 title="Categorize"
               >
                 🏷️
@@ -181,7 +185,8 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
               {(item.category === 'contact' || item.category === 'event') && (
                 <button
                   onClick={handleExport}
-                  className="px-3 py-2 text-base sm:text-lg bg-green-100 text-green-700 rounded-lg active:bg-green-200 sm:hover:bg-green-200 transition-colors touch-manipulation"
+                  className="px-2.5 py-1.5 text-sm bg-emerald-100/60 rounded-full
+                             hover:bg-emerald-100 active:bg-emerald-200 transition-all touch-manipulation"
                   title="Export"
                 >
                   📤
@@ -189,7 +194,8 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
               )}
               <button
                 onClick={() => handleQuickAction('done')}
-                className="px-3 py-2 text-base sm:text-lg bg-neutral-100 text-neutral-700 rounded-lg active:bg-neutral-200 sm:hover:bg-neutral-200 transition-colors touch-manipulation"
+                className="px-2.5 py-1.5 text-sm bg-slate-100/60 rounded-full
+                           hover:bg-slate-100 active:bg-slate-200 transition-all touch-manipulation"
                 title="Archive"
               >
                 ✓
