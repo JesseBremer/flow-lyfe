@@ -20,24 +20,24 @@ export function InboxView() {
   const recentItems = inboxItems.slice(0, 5);
 
   return (
-    <div className="w-full max-w-2xl mx-auto pb-8">
+    <div className="w-full max-w-4xl mx-auto pb-8">
       {/* Recent Entries - Immediate feedback */}
       {recentItems.length === 0 ? (
         <div className="text-center py-12 text-neutral-400">
-          <p className="text-base">Start capturing...</p>
+          <p className="text-xl sm:text-2xl">Start capturing...</p>
         </div>
       ) : (
         <>
-          <div className="mb-3 text-center text-xs text-neutral-400">
+          <div className="mb-4 text-center text-sm sm:text-base text-neutral-400">
             Recent ({inboxItems.length} total)
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3 sm:space-y-4">
             {recentItems.map((item, index) => (
               <StreamItem key={item.id} item={item} index={index} />
             ))}
           </div>
           {inboxItems.length > 5 && (
-            <div className="mt-4 text-center text-xs text-neutral-400">
+            <div className="mt-6 text-center text-sm sm:text-base text-neutral-400">
               + {inboxItems.length - 5} more items
             </div>
           )}
@@ -119,10 +119,10 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
       onClick={() => setShowActions(!showActions)}
-      className={`p-3 sm:p-4 bg-white rounded-lg border-l-4 ${energyColors[item.energy || 'medium']}
+      className={`p-4 sm:p-6 bg-white rounded-xl border-l-4 ${energyColors[item.energy || 'medium']}
                   shadow-sm active:shadow-md sm:hover:shadow-md transition-all group relative touch-manipulation`}
     >
-      <p className="text-neutral-800 text-base">{item.content}</p>
+      <p className="text-neutral-800 text-lg sm:text-xl">{item.content}</p>
 
       {/* Smart hint badge */}
       {smartHint && item.category === 'uncategorized' && (
@@ -131,12 +131,12 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
         </span>
       )}
 
-      <div className="flex items-center justify-between mt-3">
-        <div className="flex items-center gap-2 text-xs text-neutral-500">
+      <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center gap-3 text-sm sm:text-base text-neutral-500">
           <span>{format(item.createdAt, 'h:mm a')}</span>
-          {item.clusterId && <span>🌊</span>}
+          {item.clusterId && <span className="text-lg">🌊</span>}
           {item.category !== 'uncategorized' && (
-            <span className="px-2 py-0.5 bg-neutral-100 rounded-full">
+            <span className="px-3 py-1 bg-neutral-100 rounded-full text-sm">
               {item.category === 'thought' && '💭'}
               {item.category === 'idea' && '💡'}
               {item.category === 'todo' && '✓'}
@@ -159,21 +159,21 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
             >
               <button
                 onClick={() => handleQuickAction('today')}
-                className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-blue-100 text-blue-700 rounded active:bg-blue-200 sm:hover:bg-blue-200 transition-colors touch-manipulation"
+                className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-100 text-blue-700 rounded-lg active:bg-blue-200 sm:hover:bg-blue-200 transition-colors touch-manipulation"
                 title="Add to Today"
               >
                 Today
               </button>
               <button
                 onClick={() => handleQuickAction('someday')}
-                className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-purple-100 text-purple-700 rounded active:bg-purple-200 sm:hover:bg-purple-200 transition-colors touch-manipulation"
+                className="px-3 sm:px-4 py-2 text-sm sm:text-base bg-purple-100 text-purple-700 rounded-lg active:bg-purple-200 sm:hover:bg-purple-200 transition-colors touch-manipulation"
                 title="Add to Someday"
               >
                 Later
               </button>
               <button
                 onClick={() => setShowCategoryPicker(!showCategoryPicker)}
-                className="px-2 py-1 text-xs sm:text-sm bg-neutral-100 text-neutral-700 rounded active:bg-neutral-200 sm:hover:bg-neutral-200 transition-colors touch-manipulation"
+                className="px-3 py-2 text-base sm:text-lg bg-neutral-100 text-neutral-700 rounded-lg active:bg-neutral-200 sm:hover:bg-neutral-200 transition-colors touch-manipulation"
                 title="Categorize"
               >
                 🏷️
@@ -181,7 +181,7 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
               {(item.category === 'contact' || item.category === 'event') && (
                 <button
                   onClick={handleExport}
-                  className="px-2 py-1 text-xs sm:text-sm bg-green-100 text-green-700 rounded active:bg-green-200 sm:hover:bg-green-200 transition-colors touch-manipulation"
+                  className="px-3 py-2 text-base sm:text-lg bg-green-100 text-green-700 rounded-lg active:bg-green-200 sm:hover:bg-green-200 transition-colors touch-manipulation"
                   title="Export"
                 >
                   📤
@@ -189,7 +189,7 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
               )}
               <button
                 onClick={() => handleQuickAction('done')}
-                className="px-2 py-1 text-xs sm:text-sm bg-neutral-100 text-neutral-700 rounded active:bg-neutral-200 sm:hover:bg-neutral-200 transition-colors touch-manipulation"
+                className="px-3 py-2 text-base sm:text-lg bg-neutral-100 text-neutral-700 rounded-lg active:bg-neutral-200 sm:hover:bg-neutral-200 transition-colors touch-manipulation"
                 title="Archive"
               >
                 ✓

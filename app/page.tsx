@@ -25,10 +25,10 @@ export default function Home() {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
         <Navigation />
 
-      <main className="flex flex-col items-center justify-start min-h-[calc(100vh-200px)] px-4">
+      <main className="flex flex-col items-center justify-start min-h-[calc(100vh-200px)] px-4 sm:px-6 lg:px-8">
         {/* Capture Bar - Always at top except in Focus mode */}
         {currentView !== 'focus' && (
-          <div className="py-4 sm:py-6 w-full max-w-2xl">
+          <div className="py-6 sm:py-8 w-full max-w-4xl">
             <CaptureBar />
           </div>
         )}

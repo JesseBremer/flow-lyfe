@@ -21,9 +21,9 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
         <div className="flex flex-col items-center h-auto py-3 sm:py-4">
           {/* Centered Title */}
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-2xl sm:text-3xl">🌊</span>
-            <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-3xl sm:text-4xl">🌊</span>
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Flow-Lyfe
             </h1>
           </div>
@@ -32,11 +32,11 @@ export function Navigation() {
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-2 px-4 py-2 bg-neutral-100 rounded-full hover:bg-neutral-200 active:bg-neutral-300 transition-colors"
+              className="flex items-center gap-2 px-5 py-2.5 bg-neutral-100 rounded-full hover:bg-neutral-200 active:bg-neutral-300 transition-colors"
             >
-              <span>{currentItem.emoji}</span>
-              <span className="text-sm font-medium">{currentItem.label}</span>
-              <span className="text-xs">▼</span>
+              <span className="text-lg">{currentItem.emoji}</span>
+              <span className="text-base font-medium">{currentItem.label}</span>
+              <span className="text-sm">▼</span>
             </button>
 
             <AnimatePresence>
@@ -54,12 +54,12 @@ export function Navigation() {
                         setCurrentView(item.id);
                         setShowMenu(false);
                       }}
-                      className={`w-full flex items-center gap-2 px-4 py-3 hover:bg-neutral-50 transition-colors ${
+                      className={`w-full flex items-center gap-3 px-5 py-3.5 hover:bg-neutral-50 transition-colors ${
                         currentView === item.id ? 'bg-blue-50' : ''
                       }`}
                     >
-                      <span>{item.emoji}</span>
-                      <span className="text-sm font-medium">{item.label}</span>
+                      <span className="text-lg">{item.emoji}</span>
+                      <span className="text-base font-medium">{item.label}</span>
                     </button>
                   ))}
                 </motion.div>
