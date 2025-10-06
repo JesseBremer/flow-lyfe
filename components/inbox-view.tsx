@@ -20,8 +20,8 @@ export function InboxView() {
   const recentItems = inboxItems.slice(0, 5);
 
   return (
-    <div className="w-full max-w-3xl mx-auto pb-12">
-      {/* Recent Entries - Immediate feedback */}
+    <div className="w-full max-w-3xl mx-auto pb-4">
+      {/* Recent Entries - Stack layout, newest on top */}
       {recentItems.length === 0 ? (
         <div className="text-center py-16">
           <p className="text-xl font-light tracking-wide text-amber-400">breathe in...</p>
@@ -31,13 +31,20 @@ export function InboxView() {
           <div className="mb-6 text-center text-sm font-light tracking-widest text-amber-600/70 uppercase">
             Recent ({inboxItems.length})
           </div>
-          <div className="space-y-4">
-            {recentItems.map((item, index) => (
-              <StreamItem key={item.id} item={item} index={index} />
+          {/* Reversed stack - newest item appears on top, covering older ones slightly */}
+          <div className="relative space-y-[-50px]">
+            {[...recentItems].reverse().map((item, index) => (
+              <StreamItem
+                key={item.id}
+                item={item}
+                index={recentItems.length - 1 - index}
+                stackPosition={index}
+                totalItems={recentItems.length}
+              />
             ))}
           </div>
           {inboxItems.length > 5 && (
-            <div className="mt-8 text-center text-sm font-light tracking-wide text-amber-600/60">
+            <div className="mt-16 text-center text-sm font-light tracking-wide text-amber-600/60">
               + {inboxItems.length - 5} more flowing...
             </div>
           )}
@@ -47,7 +54,17 @@ export function InboxView() {
   );
 }
 
-function StreamItem({ item, index }: { item: FlowItem; index: number }) {
+function StreamItem({
+  item,
+  index,
+  stackPosition = 0,
+  totalItems = 1
+}: {
+  item: FlowItem;
+  index: number;
+  stackPosition?: number;
+  totalItems?: number;
+}) {
   const [showActions, setShowActions] = useState(false);
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
@@ -56,6 +73,10 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
     medium: 'border-l-sky-300/60',
     low: 'border-l-violet-300/60'
   };
+
+  // Calculate z-index and transform based on stack position
+  const zIndex = totalItems - stackPosition;
+  const isTopCard = stackPosition === totalItems - 1;
 
   const handleQuickAction = async (action: 'today' | 'someday' | 'done') => {
     const updates: Partial<FlowItem> = {
@@ -113,15 +134,20 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
 
   return (
     <motion.div
-      initial={{ y: 20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
+      initial={{ y: 20, opacity: 0, scale: 0.95 }}
+      animate={{
+        y: 0,
+        opacity: isTopCard ? 1 : 0.6,
+        scale: isTopCard ? 1 : 0.95 - (stackPosition * 0.02)
+      }}
       transition={{ delay: index * 0.08, type: "spring", stiffness: 100 }}
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
       onClick={() => setShowActions(!showActions)}
-      className={`p-6 bg-amber-50/70 backdrop-blur-sm rounded-2xl border-l-[6px] ${energyColors[item.energy || 'medium']}
+      style={{ zIndex }}
+      className={`p-6 bg-amber-50/90 backdrop-blur-sm rounded-2xl border-l-[6px] ${energyColors[item.energy || 'medium']}
                   shadow-lg hover:shadow-xl active:shadow-xl transition-all duration-300 group relative touch-manipulation
-                  hover:bg-amber-50/90`}
+                  hover:bg-amber-50/95 ${!isTopCard ? 'pointer-events-none' : ''}`}
     >
       <p className="text-amber-900 text-lg font-light leading-relaxed">{item.content}</p>
 

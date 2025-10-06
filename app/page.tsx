@@ -36,20 +36,22 @@ export default function Home() {
         <div className="relative z-10">
           <Navigation />
 
-          <main className="flex flex-col items-center justify-center min-h-[calc(100vh-140px)] px-6 sm:px-8">
-            {/* Capture Bar - Always at top except in Focus mode */}
-            {currentView !== 'focus' && (
-              <div className="w-full max-w-3xl mb-12">
-                <CaptureBar />
-              </div>
-            )}
-
-            {/* Dynamic Content Based on View */}
-            <div className="w-full flex justify-center">
+          <main className="flex flex-col min-h-[calc(100vh-140px)]">
+            {/* Dynamic Content Based on View - at top */}
+            <div className="flex-1 w-full flex justify-center items-start pt-8 px-6 sm:px-8 overflow-auto">
               {currentView === 'stream' && <InboxView />}
               {currentView === 'lists' && <ListsView />}
               {currentView === 'focus' && <FocusMode />}
             </div>
+
+            {/* Capture Bar - Fixed at bottom for thumb reach */}
+            {currentView !== 'focus' && (
+              <div className="sticky bottom-0 w-full px-6 sm:px-8 pb-8 pt-4 bg-gradient-to-t from-amber-50 via-amber-50/95 to-transparent">
+                <div className="max-w-3xl mx-auto">
+                  <CaptureBar />
+                </div>
+              </div>
+            )}
           </main>
 
           {/* Footer */}
