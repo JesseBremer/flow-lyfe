@@ -24,11 +24,11 @@ export function InboxView() {
       {/* Recent Entries - Immediate feedback */}
       {recentItems.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-xl font-light tracking-wide text-slate-300">breathe in...</p>
+          <p className="text-xl font-light tracking-wide text-amber-400">breathe in...</p>
         </div>
       ) : (
         <>
-          <div className="mb-6 text-center text-sm font-light tracking-widest text-slate-400 uppercase">
+          <div className="mb-6 text-center text-sm font-light tracking-widest text-amber-600/70 uppercase">
             Recent ({inboxItems.length})
           </div>
           <div className="space-y-4">
@@ -37,7 +37,7 @@ export function InboxView() {
             ))}
           </div>
           {inboxItems.length > 5 && (
-            <div className="mt-8 text-center text-sm font-light tracking-wide text-slate-400">
+            <div className="mt-8 text-center text-sm font-light tracking-wide text-amber-600/60">
               + {inboxItems.length - 5} more flowing...
             </div>
           )}
@@ -119,25 +119,25 @@ function StreamItem({ item, index }: { item: FlowItem; index: number }) {
       onMouseEnter={() => setShowActions(true)}
       onMouseLeave={() => setShowActions(false)}
       onClick={() => setShowActions(!showActions)}
-      className={`p-6 bg-white/70 backdrop-blur-sm rounded-2xl border-l-[6px] ${energyColors[item.energy || 'medium']}
+      className={`p-6 bg-amber-50/70 backdrop-blur-sm rounded-2xl border-l-[6px] ${energyColors[item.energy || 'medium']}
                   shadow-lg hover:shadow-xl active:shadow-xl transition-all duration-300 group relative touch-manipulation
-                  hover:bg-white/90`}
+                  hover:bg-amber-50/90`}
     >
-      <p className="text-slate-700 text-lg font-light leading-relaxed">{item.content}</p>
+      <p className="text-amber-900 text-lg font-light leading-relaxed">{item.content}</p>
 
       {/* Smart hint badge */}
       {smartHint && item.category === 'uncategorized' && (
-        <span className="absolute top-3 right-3 text-xs px-3 py-1 bg-blue-100/80 text-blue-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity font-light">
+        <span className="absolute top-3 right-3 text-xs px-3 py-1 bg-amber-200/80 text-amber-800 rounded-full opacity-0 group-hover:opacity-100 transition-opacity font-light">
           {smartHint}
         </span>
       )}
 
       <div className="flex items-center justify-between mt-5">
-        <div className="flex items-center gap-3 text-sm text-slate-400">
+        <div className="flex items-center gap-3 text-sm text-amber-700/60">
           <span className="font-light">{format(item.createdAt, 'h:mm a')}</span>
           {item.clusterId && <span className="text-base">🌊</span>}
           {item.category !== 'uncategorized' && (
-            <span className="px-3 py-1 bg-slate-100/50 rounded-full text-xs font-light tracking-wide">
+            <span className="px-3 py-1 bg-amber-200/40 rounded-full text-xs font-light tracking-wide">
               {item.category === 'thought' && '💭'}
               {item.category === 'idea' && '💡'}
               {item.category === 'todo' && '✓'}

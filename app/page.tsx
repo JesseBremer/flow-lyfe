@@ -22,12 +22,15 @@ export default function Home() {
   return (
     <>
       <RegisterSW />
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 via-stone-50 to-neutral-100 relative overflow-hidden">
-        {/* Ambient background elements */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-          <div className="absolute top-40 right-10 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50/40 to-orange-50/30 relative overflow-hidden">
+        {/* Subtle tea-stain texture overlay */}
+        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-100/20 via-transparent to-orange-100/20"></div>
+
+        {/* Ambient background elements - muted earth tones */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-amber-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute top-40 right-10 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
         </div>
 
         <div className="relative z-10">
@@ -50,7 +53,7 @@ export default function Home() {
           </main>
 
           {/* Footer */}
-          <footer className="py-6 text-center text-sm text-slate-400">
+          <footer className="py-6 text-center text-sm text-amber-700/60">
             <p className="font-light tracking-wide">Flow • Breathe • Emerge</p>
           </footer>
         </div>

@@ -17,7 +17,7 @@ export function Navigation() {
   const currentItem = navItems.find(item => item.id === currentView) || navItems[0];
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/60 backdrop-blur-xl border-b border-slate-200/30 safe-top">
+    <nav className="sticky top-0 z-50 bg-amber-50/80 backdrop-blur-xl border-b border-amber-200/40 safe-top">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col items-center py-6">
           {/* Centered Title */}
@@ -27,7 +27,7 @@ export function Navigation() {
             className="flex items-center gap-3 mb-4"
           >
             <span className="text-4xl">🌊</span>
-            <h1 className="text-3xl font-extralight tracking-wider bg-gradient-to-r from-slate-600 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-extralight tracking-wider bg-gradient-to-r from-amber-800 via-orange-600 to-amber-700 bg-clip-text text-transparent">
               flow
             </h1>
           </motion.div>
@@ -36,13 +36,13 @@ export function Navigation() {
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="flex items-center gap-2 px-6 py-2 bg-white/50 backdrop-blur-sm rounded-full
-                         border border-slate-200/50 hover:bg-white/70 hover:shadow-md active:scale-95
+              className="flex items-center gap-2 px-6 py-2 bg-amber-100/50 backdrop-blur-sm rounded-full
+                         border border-amber-200/50 hover:bg-amber-100/70 hover:shadow-md active:scale-95
                          transition-all duration-300"
             >
               <span className="text-lg">{currentItem.emoji}</span>
-              <span className="text-sm font-light tracking-wide text-slate-600">{currentItem.label}</span>
-              <span className="text-xs text-slate-400">▼</span>
+              <span className="text-sm font-light tracking-wide text-amber-800">{currentItem.label}</span>
+              <span className="text-xs text-amber-600">▼</span>
             </button>
 
             <AnimatePresence>
@@ -52,8 +52,8 @@ export function Navigation() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute top-full mt-3 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-xl
-                             rounded-2xl shadow-2xl border border-slate-200/50 overflow-hidden min-w-[160px]"
+                  className="absolute top-full mt-3 left-1/2 -translate-x-1/2 bg-amber-50/95 backdrop-blur-xl
+                             rounded-2xl shadow-2xl border border-amber-200/50 overflow-hidden min-w-[160px]"
                 >
                   {navItems.map((item) => (
                     <button
@@ -62,12 +62,12 @@ export function Navigation() {
                         setCurrentView(item.id);
                         setShowMenu(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-6 py-3.5 hover:bg-slate-50/50 transition-all ${
-                        currentView === item.id ? 'bg-gradient-to-r from-blue-50/50 to-purple-50/50' : ''
+                      className={`w-full flex items-center gap-3 px-6 py-3.5 hover:bg-amber-100/40 transition-all ${
+                        currentView === item.id ? 'bg-gradient-to-r from-amber-100/60 to-orange-100/50' : ''
                       }`}
                     >
                       <span className="text-lg">{item.emoji}</span>
-                      <span className="text-sm font-light tracking-wide text-slate-600">{item.label}</span>
+                      <span className="text-sm font-light tracking-wide text-amber-800">{item.label}</span>
                     </button>
                   ))}
                 </motion.div>
