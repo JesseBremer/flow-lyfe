@@ -27,7 +27,7 @@ export function CaptureBar() {
     <motion.div
       initial={{ y: -10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="w-full max-w-2xl mx-auto"
+      className="w-full"
     >
       <form onSubmit={handleCapture} className="relative">
         <input
@@ -36,9 +36,9 @@ export function CaptureBar() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="What's on your mind?"
           disabled={isCapturing}
-          className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg bg-white border-2 border-blue-200 rounded-2xl
+          className="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg text-center bg-white border-2 border-blue-200 rounded-2xl
                      focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-100
-                     disabled:opacity-50 transition-all shadow-sm"
+                     disabled:opacity-50 transition-all shadow-sm placeholder:text-center"
           autoFocus
         />
         {input && (
